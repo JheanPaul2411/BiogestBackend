@@ -19,7 +19,7 @@ export class PacientesController {
         const paciente = this.pacientesService.getOnePaciente(Number(id));
         if (!paciente) throw new NotFoundException('El paciente no existe');
         return paciente;
-    }
+    } 
 
     @Post()
     async crearPaciente(@Body() data: Paciente) {

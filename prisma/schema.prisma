@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,51 +9,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Doctor {
-  id           Int     @id @default(autoincrement())
-  nombre       String  @db.VarChar(30)
-  apellido     String  @db.VarChar(30)
-  especialidad String  @db.VarChar(50)
-  edad         Int
-  citas        Citas[]
+enum UserRole {
+  ADMIN
+  PACIENTE
+  DOCTOR
 }
 
-model Paciente {
-  id                Int           @id @default(autoincrement())
-  nombre            String        @db.VarChar(30)
-  apellido          String        @db.VarChar(30)
-  cedula            String        @unique @db.Char(10)
-  edad              Int
-  tipo_de_sangre    String        @db.VarChar(4)
-  fichasMedicas     FichaMedica[]
-  historialMedicoId Int?
-  Citas             Citas[]
-}
-
-model HistorialMedico {
-  id            Int           @id @default(autoincrement())
-  fichasMedicas FichaMedica[]
-}
-
-model FichaMedica {
-  id                Int              @id @default(autoincrement())
-  peso              Float            @db.Float
-  estatura          Float            @db.Float
-  presion_arterial  String           @db.VarChar(5)
-  pacienteId        Int
-  paciente          Paciente         @relation(fields: [pacienteId], references: [id])
-  HistorialMedico   HistorialMedico? @relation(fields: [historialMedicoId], references: [id])
-  historialMedicoId Int?
-}
-
-model Citas {
-  id              Int      @id @default(autoincrement())
-  pacienteId      Int
-  fecha           DateTime @db.Timestamp
-  motivo_consulta String   @db.VarChar(150)
-  observaciones   String   @db.VarChar(200)
-
-  paciente Paciente @relation(fields: [pacienteId], references: [id])
-  doctor   Doctor?  @relation(fields: [doctorId], references: [id])
-  doctorId Int?
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nombre   String   @db.VarChar(30)
+  apellido String   @db.VarChar(30)
+  cedula   String   @unique @db.Char(10)
+  edad     Int
+  email    String   @unique @db.VarChar(50)
+  password String   @db.VarChar(50)
+  contacto String   @db.VarChar(20)
+  rol      UserRole // Puedes definir roles como "Paciente" o "Administrador"
 }
