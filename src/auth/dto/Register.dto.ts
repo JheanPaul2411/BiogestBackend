@@ -4,7 +4,7 @@ export class RegisterDto{
        nombre: string
     apellido: string 
     cedula: string
-    edad: number
+    fecha_nacimiento: Date
     email: string
     password: string
     contacto: string

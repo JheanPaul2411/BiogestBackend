@@ -16,13 +16,13 @@ enum UserRole {
 }
 
 model Usuario {
-  id       Int      @id @default(autoincrement())
-  nombre   String   @db.VarChar(30)
-  apellido String   @db.VarChar(30)
-  cedula   String   @unique @db.Char(10)
-  edad     Int
-  email    String   @unique @db.VarChar(50)
-  password String   @db.VarChar(50)
-  contacto String   @db.VarChar(20)
-  rol      UserRole // Puedes definir roles como "Paciente" o "Administrador"
+  id               Int      @id @default(autoincrement())
+  nombre           String   @db.VarChar(30)
+  apellido         String   @db.VarChar(30)
+  cedula           String   @unique @db.Char(10)
+  fecha_nacimiento DateTime @db.Date
+  email            String   @unique @db.VarChar(50)
+  password         String   @db.VarChar(250)
+  contacto         String   @db.VarChar(20)
+  rol              UserRole // Puedes definir roles como "Paciente" o "Administrador"
 }

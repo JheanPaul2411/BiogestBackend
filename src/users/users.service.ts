@@ -1,10 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { RegisterDto } from 'src/auth/dto/Auth.dto';
+import { RegisterDto } from 'src/auth/dto/Register.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly prisma: PrismaService) { }
+
+    async findAllUsers() {
+        const allUsers = await this.prisma.usuario.findMany();
+        if(!allUsers) throw new HttpException('No existen usuarios',HttpStatus.BAD_REQUEST)
+
+        return allUsers
+    }
 
     async findUserByEmail(email: string) {
         const user = await this.prisma.usuario.findUnique({
@@ -37,7 +44,11 @@ export class UsersService {
 
 
         const newUser = await this.prisma.usuario.create({
-            data: createUserDTO,
+            data: {
+                ...createUserDTO,
+                fecha_nacimiento:new Date(createUserDTO.fecha_nacimiento)
+            },
+            
         });
 
         return newUser;
