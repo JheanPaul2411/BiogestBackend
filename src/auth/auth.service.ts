@@ -14,25 +14,31 @@ export class AuthService {
     ) { }
 
     async login(loginDto: LoginDTO) {
-        const { email, password } = loginDto;
-        const findUSer = await this.userService.findUserByEmail(email);
+    const { email, password } = loginDto;
+    const findUSer = await this.userService.findUserByEmail(email);
+        console.log("Email",email)
+    if (!findUSer) throw new HttpException('El usuario no se encontró', 404);
 
-        if (!findUSer) throw new HttpException('El usuario no se encontró', 404);
+    const checkPassword = await compare(password, findUSer.password);
 
-        const checkPassword = await compare(password, findUSer.password);
+    console.log(password)
+    console.log(findUSer)
+    if (!checkPassword) throw new HttpException('La contraseña es incorrecta', HttpStatus.FORBIDDEN);
 
-        console.log(password)
-        console.log(findUSer)
-        if (!checkPassword) throw new HttpException('La contraseña es incorrecta', HttpStatus.FORBIDDEN);
+    const payload={id:findUSer.id, name:findUSer.nombre}
+    const token = await this.jwtAuthService.sign(payload)
 
-        const payload={id:findUSer.id, name:findUSer.nombre}
-        const token = await this.jwtAuthService.sign(payload)
-        const data = {
-            user: findUSer,
-            token
-        };
-        return data;
-    }
+    const userCopy = { ...findUSer };
+
+    delete userCopy.password;
+
+    const data = {
+        user: userCopy,
+        token
+    };
+    return data;
+}
+
 
     async register(registerDto: RegisterDto) {
         const { password } = registerDto;

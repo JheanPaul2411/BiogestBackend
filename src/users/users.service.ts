@@ -8,19 +8,24 @@ export class UsersService {
 
     async findAllUsers() {
         const allUsers = await this.prisma.usuario.findMany();
-        if(!allUsers) throw new HttpException('No existen usuarios',HttpStatus.BAD_REQUEST)
+        if (!allUsers) throw new HttpException('No existen usuarios', HttpStatus.BAD_REQUEST)
 
         return allUsers
     }
 
     async findUserByEmail(email: string) {
-        const user = await this.prisma.usuario.findUnique({
-            where: {
-                email
-            }
-        });
-        return user;
+        try {
+            const user = await this.prisma.usuario.findUnique({
+                where: {
+                    email: email,
+                }
+            })
+            return user;
+        } catch (error) {
+            console.error(error);
+        }
     }
+
 
     async findUserByCedula(cedula: string) {
         const user = await this.prisma.usuario.findUnique({
@@ -46,9 +51,9 @@ export class UsersService {
         const newUser = await this.prisma.usuario.create({
             data: {
                 ...createUserDTO,
-                fecha_nacimiento:new Date(createUserDTO.fecha_nacimiento)
+                fecha_nacimiento: new Date(createUserDTO.fecha_nacimiento)
             },
-            
+
         });
 
         return newUser;
