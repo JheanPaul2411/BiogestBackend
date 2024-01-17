@@ -51,4 +51,6 @@ export class AuthService {
         const newUser = await this.userService.createUser(registerDto);
         return newUser;
     }
+
+  
 }
