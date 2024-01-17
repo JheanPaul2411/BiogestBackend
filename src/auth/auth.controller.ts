@@ -20,6 +20,15 @@ export class AuthController {
         return this.authService.register(registerDto);
     }
 
+    
+    
+    /*
+    !ERROR:
+    Cuando envio el token que se almacena en el session storage del usario desde React, no funciona (me dice que el token no es válido).
+    Sin embargo, cuando envío el mismo token desde POSTMAN, si funciona (me dice que el token si es válido).
+    
+    ?Ya verifiqué los CORS, y admití las peticiones desde React, pero sigue sin funcionar */
+    
     @Get('validate')
     async validateToken(@Req() request) {
         const token = request.headers.authorization;
