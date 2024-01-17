@@ -21,7 +21,6 @@ export class AuthController {
     }
 
     @Get('validate')
-    @Get('validate')
     async validateToken(@Req() request) {
         const token = request.headers.authorization;
         console.log('Received token:', token);
