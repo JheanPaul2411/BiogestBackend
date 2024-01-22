@@ -36,6 +36,24 @@ export class UsersService {
         return user;
     }
 
+    async findUserByID(id:number) {
+        try {
+            const user = this.prisma.usuario.findUnique({
+                where:{
+                    id
+                }
+            });
+
+            if(!user){
+                throw new Error("User not found");
+            }
+            return user;
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     async createUser(createUserDTO: RegisterDto) {
         const userEmailExists = await this.findUserByEmail(createUserDTO.email);
@@ -58,4 +76,6 @@ export class UsersService {
 
         return newUser;
     }
+
+   
 }
