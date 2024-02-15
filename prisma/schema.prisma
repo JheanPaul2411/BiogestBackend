@@ -26,6 +26,7 @@ model Usuario {
   contacto         String   @db.VarChar(20)
   rol              UserRole // Puedes definir roles como "Paciente" o "Administrador"
   citas            Cita[]
+  fichasMedicas    fichaMedica[]
 }
 model Cita {
   id        Int      @id @default(autoincrement())
@@ -35,4 +36,26 @@ model Cita {
   pacienteId Int?
   motivo    String
   sintomas  String?
+}
+
+model fichaMedica{
+  id Int @id @default(autoincrement())
+  paciente Usuario? @relation(fields: [pacienteId], references: [id])
+  pacienteId Int?
+  peso Float?
+  altura Float?
+  presionArterial String?
+  temperatura Float?
+  enfermedades String?
+  alergias String?
+  medicamentos String?
+  antecedentesFamiliares String?
+  antecedentesPersonales String?
+  fecha DateTime? @db.Date
+  hora DateTime? @db.Time
+  observaciones String?
+  diagnostico String?
+  tratamiento String?
+  proximaCita DateTime? @db.Date
+  proximaCitaHora DateTime? @db.Time
 }

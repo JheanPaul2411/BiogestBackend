@@ -5,9 +5,10 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CitaService } from './cita/cita.service';
 import { CitaModule } from './cita/cita.module';
+import { FichaMedicaModule } from './ficha_medica/ficha_medica.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, AuthModule, ConfigModule.forRoot(), CitaModule,
+  imports: [PrismaModule, UsersModule, AuthModule, ConfigModule.forRoot(), CitaModule, FichaMedicaModule,
   ],
   controllers: [],
   providers: [CitaService],

@@ -4,6 +4,7 @@ import { RegisterDto } from 'src/auth/dto/Register.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('usuarios')
+
 export class UsersController {
 
     constructor(private readonly userService:UsersService){}

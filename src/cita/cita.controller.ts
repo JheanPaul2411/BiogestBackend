@@ -1,8 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateCitaDTO } from './dto/Citas.dto';
 import { CitaService } from './cita.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('cita')
+@UseGuards(JwtAuthGuard)
+
 export class CitaController {
 
     constructor(private readonly citaService: CitaService) { }
