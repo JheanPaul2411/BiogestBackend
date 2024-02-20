@@ -31,7 +31,6 @@ model Usuario {
 model Cita {
   id        Int      @id @default(autoincrement())
   fecha     DateTime @db.Date
-  hora      DateTime @db.Time
   paciente  Usuario? @relation(fields: [pacienteId], references: [id])
   pacienteId Int?
   motivo    String
