@@ -25,7 +25,7 @@ export class AuthService {
         console.log(findUSer)
         if (!checkPassword) throw new HttpException('La contraseña es incorrecta', HttpStatus.FORBIDDEN);
 
-        const payload = { id: findUSer.id, name: findUSer.nombre }
+        const payload = { id: findUSer.id, name: findUSer.nombre, rol:findUSer.rol }
         const token = await this.jwtAuthService.sign(payload)
 
         const userCopy = { ...findUSer };
@@ -42,7 +42,9 @@ export class AuthService {
 
     async register(registerDto: RegisterDto) {
         const { password } = registerDto;
+        console.log(password)
         if (!password) {
+            console.log(registerDto)
             throw new BadRequestException('La contraseña no puede estar vacía');
         }
         const passwordHashed = await hash(password, 10);

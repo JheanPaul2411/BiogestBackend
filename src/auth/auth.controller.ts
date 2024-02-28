@@ -2,6 +2,7 @@ import { Body, Controller, Post, Req, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/Register.dto';
 import { LoginDTO } from './dto/Login.dto';
+import * as jwt from 'jsonwebtoken';
 
 @Controller('auth')
 export class AuthController {
@@ -22,12 +23,16 @@ export class AuthController {
         let token: string = request.headers.authorization;
         token = token.trim();
 
-        console.log('Received token:', token);
 
         try {
-            return { isValid: true };
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            console.log(token);
+            if(decodedToken){
+                return { isValid: true };
+            }else{
+                return { isValid: false }; 
+            }
         } catch (err) {
-            console.error('Token verification failed:', err);
             return { isValid: false };
         }
     }

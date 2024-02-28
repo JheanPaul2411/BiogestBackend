@@ -19,7 +19,6 @@ CREATE TABLE `Usuario` (
 CREATE TABLE `Cita` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `fecha` DATE NOT NULL,
-    `hora` TIME NOT NULL,
     `pacienteId` INTEGER NULL,
     `motivo` VARCHAR(191) NOT NULL,
     `sintomas` VARCHAR(191) NULL,

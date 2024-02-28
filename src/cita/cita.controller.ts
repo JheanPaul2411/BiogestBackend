@@ -1,7 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateCitaDTO } from './dto/Citas.dto';
 import { CitaService } from './cita.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/Roles.decorator';
+import { UserRole } from '@prisma/client';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @Controller('cita')
 @UseGuards(JwtAuthGuard)
@@ -14,6 +17,8 @@ export class CitaController {
      * Obtiene todas las citas
      */
     @Get()
+    @Roles([UserRole.DOCTOR, UserRole.ADMIN])
+    @UseGuards(RolesGuard)
     async getAll() {
         return await this.citaService.findAllCitas();
     }
@@ -24,16 +29,6 @@ export class CitaController {
     @Get('paciente/:id')
     async getByPaciente(@Param('id') id: string) {
         return await this.citaService.findCitasByPaciente(parseInt(id));
-    }
-
-
-    /**
-     * Obtiene las citas de un paciente en una fecha especifica
-     */
-    @Get('paciente/:id/:date')
-    async getByDateAndPacient(@Param('id') id_paciente: string, @Param('date') dateString: string) {
-        const date = new Date(dateString);
-        return await this.citaService.findCitasByPacienteAndDate(parseInt(id_paciente), date);
     }
 
      /**

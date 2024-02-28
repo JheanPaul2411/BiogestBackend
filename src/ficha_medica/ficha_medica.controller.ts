@@ -2,11 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { FichaMedicaService } from './ficha_medica.service';
 import { CreateFichaMedicaDto } from './dto/create-ficha_medica.dto';
 import { UpdateFichaMedicaDto } from './dto/update-ficha_medica.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/Roles.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { UserRole } from 'src/users/user-role.enum';
 
 
 @Controller('ficha-medica')
 @UseGuards(JwtAuthGuard)
+
 export class FichaMedicaController {
   constructor(private readonly fichaMedicaService: FichaMedicaService) {}
 
@@ -16,6 +20,8 @@ export class FichaMedicaController {
   }
 
   @Get()
+  @Roles([UserRole.ADMIN, UserRole.DOCTOR])
+  @UseGuards(RolesGuard)
   findAll() {
     return this.fichaMedicaService.findAll();
   }
