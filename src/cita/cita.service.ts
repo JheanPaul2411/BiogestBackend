@@ -8,7 +8,11 @@ export class CitaService {
     constructor(private readonly prisma: PrismaService) { }
 
     async findAllCitas() {
-        const allCitas = await this.prisma.cita.findMany();
+        const allCitas = await this.prisma.cita.findMany({
+            include:{
+                paciente:true
+            },
+        });
         return allCitas
     }
 
