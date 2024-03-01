@@ -3,7 +3,6 @@
 export interface CitaDTO {
     id: number;
     fecha: string;
-    hora: Date;
     pacienteId?: number;
     motivo: string;
     sintomas?: string;
@@ -11,7 +10,6 @@ export interface CitaDTO {
 
   export interface CreateCitaDTO {
     fecha: Date;
-    hora: Date;
     pacienteId?: number;
     motivo: string;
     sintomas?: string;
