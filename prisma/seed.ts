@@ -14,8 +14,18 @@ async function main() {
         })
     }
 
-    for(const cita of citas){
-        await prisma.cita.create({data:cita})
+    for (const cita of citas) {
+        await prisma.cita.create({
+            data: {
+                paciente: {
+                    connect: { id: cita.pacienteId }
+                },
+                fecha:cita.fecha,
+                motivo:cita.motivo,
+                sintomas:cita.sintomas
+            }
+
+        })
     }
 
 

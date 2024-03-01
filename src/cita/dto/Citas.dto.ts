@@ -6,6 +6,8 @@ export interface CitaDTO {
     pacienteId?: number;
     motivo: string;
     sintomas?: string;
+    acetpada?:boolean;
+
   }
 
   export interface CreateCitaDTO {
@@ -13,6 +15,7 @@ export interface CitaDTO {
     pacienteId?: number;
     motivo: string;
     sintomas?: string;
+    acetpada:boolean;
   }
   
   

@@ -16,45 +16,47 @@ enum UserRole {
 }
 
 model Usuario {
-  id               Int      @id @default(autoincrement())
-  nombre           String   @db.VarChar(30)
-  apellido         String   @db.VarChar(30)
-  cedula           String   @unique @db.Char(10)
-  fecha_nacimiento DateTime @db.Date
-  email            String   @unique @db.VarChar(50)
-  password         String   @db.VarChar(250)
-  contacto         String   @db.VarChar(20)
+  id               Int           @id @default(autoincrement())
+  nombre           String        @db.VarChar(30)
+  apellido         String        @db.VarChar(30)
+  cedula           String        @unique @db.Char(10)
+  fecha_nacimiento DateTime      @db.Date
+  email            String        @unique @db.VarChar(50)
+  password         String        @db.VarChar(250)
+  contacto         String        @db.VarChar(20)
   rol              UserRole // Puedes definir roles como "Paciente" o "Administrador"
   citas            Cita[]
   fichasMedicas    fichaMedica[]
 }
+
 model Cita {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @db.Date
-  paciente  Usuario? @relation(fields: [pacienteId], references: [id])
+  id         Int      @id @default(autoincrement())
+  fecha      DateTime @db.Date
+  paciente   Usuario? @relation(fields: [pacienteId], references: [id])
   pacienteId Int?
-  motivo    String
-  sintomas  String?
+  motivo     String
+  sintomas   String?
+  aceptada   Boolean  @default(false)
 }
 
-model fichaMedica{
-  id Int @id @default(autoincrement())
-  paciente Usuario? @relation(fields: [pacienteId], references: [id])
-  pacienteId Int?
-  peso Float?
-  altura Float?
-  presionArterial String?
-  temperatura Float?
-  enfermedades String?
-  alergias String?
-  medicamentos String?
+model fichaMedica {
+  id                     Int       @id @default(autoincrement())
+  paciente               Usuario?  @relation(fields: [pacienteId], references: [id])
+  pacienteId             Int?
+  peso                   Float?
+  altura                 Float?
+  presionArterial        String?
+  temperatura            Float?
+  enfermedades           String?
+  alergias               String?
+  medicamentos           String?
   antecedentesFamiliares String?
   antecedentesPersonales String?
-  fecha DateTime? @db.Date
-  hora DateTime? @db.Time
-  observaciones String?
-  diagnostico String?
-  tratamiento String?
-  proximaCita DateTime? @db.Date
-  proximaCitaHora DateTime? @db.Time
+  fecha                  DateTime? @db.Date
+  hora                   DateTime? @db.Time
+  observaciones          String?
+  diagnostico            String?
+  tratamiento            String?
+  proximaCita            DateTime? @db.Date
+  proximaCitaHora        DateTime? @db.Time
 }
