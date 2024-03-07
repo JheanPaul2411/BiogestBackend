@@ -12,6 +12,9 @@ export class CitaService {
             include:{
                 paciente:true
             },
+            orderBy:{
+                fecha:'desc'
+            }
         });
         return allCitas
     }
@@ -76,7 +79,7 @@ export class CitaService {
             where: {
                 id
             },
-            data
+            data:data
         });
 
         if (!cita) throw new HttpException("Error al actualizar la cita", HttpStatus.BAD_REQUEST);
