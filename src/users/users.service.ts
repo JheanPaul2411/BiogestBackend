@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UserRole } from '@prisma/client';
 import { RegisterDto } from 'src/auth/dto/Register.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -36,21 +37,37 @@ export class UsersService {
         return user;
     }
 
-    async findUserByID(id:number) {
+    async findUserByID(id: number) {
         try {
             const user = this.prisma.usuario.findUnique({
-                where:{
+                where: {
                     id
                 }
             });
 
-            if(!user){
+            if (!user) {
                 throw new Error("User not found");
             }
             return user;
-            
+
         } catch (error) {
             console.log(error)
+        }
+    }
+    async findUserByRole(role: UserRole) {
+        try {
+            const user = this.prisma.usuario.findMany({
+                where: {
+                    rol: role
+                }
+            });
+            if (!user)
+                throw new HttpException("Users not found", HttpStatus.NOT_FOUND);
+
+            return user;
+        } catch (error) {
+            throw new HttpException('Error:'+error, HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -77,5 +94,5 @@ export class UsersService {
         return newUser;
     }
 
-   
+
 }

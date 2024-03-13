@@ -16,13 +16,10 @@ export class AuthService {
     async login(loginDto: LoginDTO) {
         const { email, password } = loginDto;
         const findUSer = await this.userService.findUserByEmail(email);
-        console.log("Email", email)
         if (!findUSer) throw new HttpException('El usuario no se encontró', 404);
 
         const checkPassword = await compare(password, findUSer.password);
 
-        console.log(password)
-        console.log(findUSer)
         if (!checkPassword) throw new HttpException('La contraseña es incorrecta', HttpStatus.FORBIDDEN);
 
         const payload = { id: findUSer.id, name: findUSer.nombre, rol:findUSer.rol }
@@ -42,9 +39,7 @@ export class AuthService {
 
     async register(registerDto: RegisterDto) {
         const { password } = registerDto;
-        console.log(password)
         if (!password) {
-            console.log(registerDto)
             throw new BadRequestException('La contraseña no puede estar vacía');
         }
         const passwordHashed = await hash(password, 10);
