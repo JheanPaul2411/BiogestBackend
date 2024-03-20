@@ -24,6 +24,7 @@ model Usuario {
   email            String        @unique @db.VarChar(50)
   password         String        @db.VarChar(250)
   contacto         String        @db.VarChar(20)
+  photoUrl          String?
   rol              UserRole // Puedes definir roles como "Paciente" o "Administrador"
   citas            Cita[]
   fichasMedicas    fichaMedica[]

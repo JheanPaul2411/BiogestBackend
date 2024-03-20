@@ -66,13 +66,13 @@ export class UsersService {
 
             return user;
         } catch (error) {
-            throw new HttpException('Error:'+error, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new HttpException('Error:' + error, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
 
 
-    async createUser(createUserDTO: RegisterDto) {
+    async createUser(createUserDTO: RegisterDto & { photoUrl?: string }) {
         const userEmailExists = await this.findUserByEmail(createUserDTO.email);
         const userCedulaExists = await this.findUserByCedula(createUserDTO.cedula);
 
@@ -86,9 +86,9 @@ export class UsersService {
         const newUser = await this.prisma.usuario.create({
             data: {
                 ...createUserDTO,
-                fecha_nacimiento: new Date(createUserDTO.fecha_nacimiento)
+                fecha_nacimiento: new Date(createUserDTO.fecha_nacimiento),
+                photoUrl: createUserDTO.photoUrl
             },
-
         });
 
         return newUser;

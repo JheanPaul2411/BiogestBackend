@@ -8,5 +8,6 @@ export class RegisterDto {
     email: string
     password: string
     contacto: string
+    photoUrl?:string
     rol: UserRole //
 }

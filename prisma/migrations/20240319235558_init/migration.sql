@@ -8,6 +8,7 @@ CREATE TABLE `Usuario` (
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(250) NOT NULL,
     `contacto` VARCHAR(20) NOT NULL,
+    `photoUrl` VARCHAR(191) NULL,
     `rol` ENUM('ADMIN', 'PACIENTE', 'DOCTOR') NOT NULL,
 
     UNIQUE INDEX `Usuario_cedula_key`(`cedula`),
