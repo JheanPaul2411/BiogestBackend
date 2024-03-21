@@ -5,7 +5,7 @@ import { LoginDTO } from './dto/Login.dto';
 import * as jwt from 'jsonwebtoken';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+
 
 @Controller('auth')
 export class AuthController {
@@ -17,19 +17,22 @@ export class AuthController {
     }
 
     @Post('register')
-    @UseInterceptors(FileInterceptor('photoUrl', {
+    @UseInterceptors(FileInterceptor('photoUrl',{
         storage: diskStorage({
-            destination: '../uploads',
-            filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                return cb(null, `${randomName}${extname(file.originalname)}`);
+            destination:'./src/upload',
+            filename: (req,file,cb)=>{
+                const name = file.originalname.split('')[0];
+                const filename = file.originalname;
+                const randomName = Array(4)
+                    .fill(null)
+                    .map(()=>Math.round(Math.random()*16).toString())
+                    .join('')
+                cb(null, `${name}-${randomName}${filename}`)
             }
         })
     }))
-    async create(@UploadedFile() file, @Body() registerDto: RegisterDto) {
-        console.log(file)
-        console.log(registerDto)
-        const photoUrl = `http://localhost:3000/uploads/${file.filename}`;
+    async create(@UploadedFile() file: Express.Multer.File, @Body() registerDto: RegisterDto) {
+        const photoUrl = `http://localhost:3000/src/upload/${file.filename}`;
         const user = await this.authService.register({ ...registerDto, photoUrl });
         return user;
     }
