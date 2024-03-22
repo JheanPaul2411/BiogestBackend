@@ -54,10 +54,8 @@ model fichaMedica {
   antecedentesFamiliares String?
   antecedentesPersonales String?
   fecha                  DateTime? @db.Date
-  hora                   DateTime? @db.Time
   observaciones          String?
   diagnostico            String?
   tratamiento            String?
   proximaCita            DateTime? @db.Date
-  proximaCitaHora        DateTime? @db.Time
 }

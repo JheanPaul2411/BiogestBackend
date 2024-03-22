@@ -42,12 +42,10 @@ CREATE TABLE `fichaMedica` (
     `antecedentesFamiliares` VARCHAR(191) NULL,
     `antecedentesPersonales` VARCHAR(191) NULL,
     `fecha` DATE NULL,
-    `hora` TIME NULL,
     `observaciones` VARCHAR(191) NULL,
     `diagnostico` VARCHAR(191) NULL,
     `tratamiento` VARCHAR(191) NULL,
     `proximaCita` DATE NULL,
-    `proximaCitaHora` TIME NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
