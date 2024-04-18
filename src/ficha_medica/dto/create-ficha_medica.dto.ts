@@ -1,5 +1,5 @@
 export class CreateFichaMedicaDto {
-    pacienteId?: number;
+    pacienteId: number;
     peso?: number;
     altura?: number;
     presionArterial?: string;

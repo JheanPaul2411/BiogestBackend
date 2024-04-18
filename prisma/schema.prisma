@@ -17,14 +17,14 @@ enum UserRole {
 
 model Usuario {
   id               Int           @id @default(autoincrement())
-  nombre           String        @db.VarChar(30)
-  apellido         String        @db.VarChar(30)
-  cedula           String        @unique @db.Char(10)
-  fecha_nacimiento DateTime      @db.Date
+  nombre           String?       @db.VarChar(30)
+  apellido         String?       @db.VarChar(30)
+  cedula           String?       @unique @db.Char(10)
+  fecha_nacimiento DateTime?     @db.Date
   email            String        @unique @db.VarChar(50)
-  password         String        @db.VarChar(250)
-  contacto         String        @db.VarChar(20)
-  photoUrl          String?
+  password         String?       @db.VarChar(250)
+  contacto         String?       @db.VarChar(20)
+  photoUrl         String?
   rol              UserRole // Puedes definir roles como "Paciente" o "Administrador"
   citas            Cita[]
   fichasMedicas    fichaMedica[]
@@ -32,7 +32,7 @@ model Usuario {
 
 model Cita {
   id         Int      @id @default(autoincrement())
-  fecha      DateTime @db.Date
+  fecha      DateTime @db.DateTime()
   paciente   Usuario? @relation(fields: [pacienteId], references: [id])
   pacienteId Int?
   motivo     String
@@ -44,10 +44,10 @@ model fichaMedica {
   id                     Int       @id @default(autoincrement())
   paciente               Usuario?  @relation(fields: [pacienteId], references: [id])
   pacienteId             Int?
-  peso                   Float?
-  altura                 Float?
+  peso                   Decimal?  @db.Decimal(6, 2)
+  altura                 Decimal?  @db.Decimal(6, 2)
   presionArterial        String?
-  temperatura            Float?
+  temperatura            Decimal?  @db.Decimal(6, 2)
   enfermedades           String?
   alergias               String?
   medicamentos           String?

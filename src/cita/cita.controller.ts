@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CreateCitaDTO } from './dto/Citas.dto';
 import { CitaService } from './cita.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
@@ -27,8 +27,11 @@ export class CitaController {
      * Obtiene las citas de un paciente
      */
     @Get('paciente/:id')
-    async getByPaciente(@Param('id') id: string) {
-        return await this.citaService.findCitasByPaciente(parseInt(id));
+    async getByPaciente(
+        @Param('id') id: string,
+        @Query('aceptada', ParseBoolPipe) aceptada?: boolean
+    ) {
+        return await this.citaService.findCitasByPaciente(parseInt(id), aceptada);
     }
 
      /**

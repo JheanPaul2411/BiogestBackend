@@ -1,13 +1,13 @@
 -- CreateTable
 CREATE TABLE `Usuario` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nombre` VARCHAR(30) NOT NULL,
-    `apellido` VARCHAR(30) NOT NULL,
-    `cedula` CHAR(10) NOT NULL,
-    `fecha_nacimiento` DATE NOT NULL,
+    `nombre` VARCHAR(30) NULL,
+    `apellido` VARCHAR(30) NULL,
+    `cedula` CHAR(10) NULL,
+    `fecha_nacimiento` DATE NULL,
     `email` VARCHAR(50) NOT NULL,
-    `password` VARCHAR(250) NOT NULL,
-    `contacto` VARCHAR(20) NOT NULL,
+    `password` VARCHAR(250) NULL,
+    `contacto` VARCHAR(20) NULL,
     `photoUrl` VARCHAR(191) NULL,
     `rol` ENUM('ADMIN', 'PACIENTE', 'DOCTOR') NOT NULL,
 
@@ -23,6 +23,7 @@ CREATE TABLE `Cita` (
     `pacienteId` INTEGER NULL,
     `motivo` VARCHAR(191) NOT NULL,
     `sintomas` VARCHAR(191) NULL,
+    `lugar` ENUM('CHILLOGALLO', 'VALLE', 'CONOCOTO') NOT NULL,
     `aceptada` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
@@ -32,10 +33,10 @@ CREATE TABLE `Cita` (
 CREATE TABLE `fichaMedica` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `pacienteId` INTEGER NULL,
-    `peso` DOUBLE NULL,
-    `altura` DOUBLE NULL,
+    `peso` DECIMAL(6, 2) NULL,
+    `altura` DECIMAL(6, 2) NULL,
     `presionArterial` VARCHAR(191) NULL,
-    `temperatura` DOUBLE NULL,
+    `temperatura` DECIMAL(6, 2) NULL,
     `enfermedades` VARCHAR(191) NULL,
     `alergias` VARCHAR(191) NULL,
     `medicamentos` VARCHAR(191) NULL,

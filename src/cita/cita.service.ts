@@ -19,11 +19,12 @@ export class CitaService {
         return allCitas
     }
 
-    async findCitasByPaciente(id: number) {
+    async findCitasByPaciente(id: number, aceptada?:boolean) {
         const allCitas = await this.prisma.cita.findMany({
             where: {
-                pacienteId: id
-            }
+                pacienteId: id,
+                aceptada
+            }, include:{paciente:true}
         });
         return allCitas
     }
@@ -51,8 +52,10 @@ export class CitaService {
         const newCita = await this.prisma.cita.create({
             data: {
                 ...createCitaDTO,
+                fecha: new Date(createCitaDTO.fecha)
             }
         });
+        console.log(createCitaDTO.fecha)
     
         if (!newCita) {
             throw new HttpException("Error al crear la cita", HttpStatus.BAD_REQUEST);
