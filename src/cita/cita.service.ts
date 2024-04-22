@@ -9,24 +9,32 @@ export class CitaService {
 
     async findAllCitas() {
         const allCitas = await this.prisma.cita.findMany({
-            include:{
-                paciente:true
+            include: {
+                paciente: true
             },
-            orderBy:{
-                fecha:'desc'
+            orderBy: {
+                fecha: 'desc'
             }
         });
         return allCitas
     }
 
-    async findCitasByPaciente(id: number, aceptada?:boolean) {
+    async findCitasByPaciente(id: number, aceptada?: boolean) {
+        const where = {
+            pacienteId: id,
+        };
+
+        // Si se proporciona el valor de 'aceptada', se agrega la condición al objeto 'where'
+        if (aceptada !== undefined) {
+            where['aceptada'] = aceptada;
+        }
+
         const allCitas = await this.prisma.cita.findMany({
-            where: {
-                pacienteId: id,
-                aceptada
-            }, include:{paciente:true}
+            where,
+            include: { paciente: true },
         });
-        return allCitas
+
+        return allCitas;
     }
 
     async findCitasByPacienteAndDate(id: number, date: Date) {
@@ -42,7 +50,7 @@ export class CitaService {
     }
 
     async createCita(createCitaDTO: CreateCitaDTO) {
-        
+
         /*console.log(createCitaDTO)
         // Crear un objeto Date con la hora y la fecha adecuadas
         const fechaHora = new Date(createCitaDTO.fecha);
@@ -56,14 +64,14 @@ export class CitaService {
             }
         });
         console.log(createCitaDTO.fecha)
-    
+
         if (!newCita) {
             throw new HttpException("Error al crear la cita", HttpStatus.BAD_REQUEST);
         }
-    
+
         return newCita;
     }
-    
+
 
     async deleteCita(id: number) {
         const cita = await this.prisma.cita.delete({
@@ -82,11 +90,40 @@ export class CitaService {
             where: {
                 id
             },
-            data:data
+            data: data
         });
 
         if (!cita) throw new HttpException("Error al actualizar la cita", HttpStatus.BAD_REQUEST);
 
         return cita;
     }
+
+
+    async findCitasByPacienteQuery(fecha?: Date, aceptada?: boolean) {
+        try {
+            const where: { fecha?: Date; aceptada?: boolean } = {};
+
+            if (fecha) {
+                where.fecha = new Date(fecha);
+            }
+
+            if (aceptada !== undefined) {
+                where.aceptada = aceptada;
+            }
+
+            console.log(where)
+            const allCitas = await this.prisma.cita.findMany({
+                where,
+                include: {
+                    paciente: true,
+                },
+            });
+
+            return allCitas;
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error: " + error);
+        }
+    }
+
 }

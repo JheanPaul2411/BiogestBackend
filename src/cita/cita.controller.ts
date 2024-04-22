@@ -13,6 +13,26 @@ export class CitaController {
 
     constructor(private readonly citaService: CitaService) { }
 
+
+    @UseGuards(RolesGuard)
+    @Roles([UserRole.ADMIN])
+    @Get('agenda/')
+    async getByPacienteQuery(
+        @Query('fecha') fecha?: Date,
+        @Query('aceptada', ParseBoolPipe) aceptada?: boolean
+    ) {
+        return await this.citaService.findCitasByPacienteQuery(fecha, aceptada);
+    }
+    /**
+     * Obtiene las citas de un paciente
+     */
+    @Get('paciente/:id')
+    async getByPaciente(
+        @Param('id') id: string,
+        @Query('aceptada', ParseBoolPipe) aceptada?: boolean | undefined | null
+    ) {
+        return await this.citaService.findCitasByPaciente(+id, aceptada);
+    }
     /**
      * Obtiene todas las citas
      */
@@ -24,17 +44,6 @@ export class CitaController {
     }
 
     /**
-     * Obtiene las citas de un paciente
-     */
-    @Get('paciente/:id')
-    async getByPaciente(
-        @Param('id') id: string,
-        @Query('aceptada', ParseBoolPipe) aceptada?: boolean
-    ) {
-        return await this.citaService.findCitasByPaciente(parseInt(id), aceptada);
-    }
-
-     /**
       * Crea una nueva cita
       */
     @Post()
