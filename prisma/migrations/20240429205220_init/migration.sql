@@ -19,11 +19,10 @@ CREATE TABLE `Usuario` (
 -- CreateTable
 CREATE TABLE `Cita` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `fecha` DATE NOT NULL,
+    `fecha` DATETIME NOT NULL,
     `pacienteId` INTEGER NULL,
     `motivo` VARCHAR(191) NOT NULL,
     `sintomas` VARCHAR(191) NULL,
-    `lugar` ENUM('CHILLOGALLO', 'VALLE', 'CONOCOTO') NOT NULL,
     `aceptada` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)

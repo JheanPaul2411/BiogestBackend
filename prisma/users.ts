@@ -11,7 +11,7 @@ export const users: RegisterDto[] = [
         cedula: "1754454849",
         contacto: "0983078841",
         email: "admin@admin.com",
-        password: "admin",
+        password: "Rmga288+",
         fecha_nacimiento: new Date('06/12/2003'),
         rol: UserRole.ADMIN
     },
@@ -21,7 +21,7 @@ export const users: RegisterDto[] = [
         cedula: "1754400019",
         contacto: "0981120841",
         email: "paciente@paciente.com",
-        password: "paciente",
+        password: "Rmga288+",
         fecha_nacimiento: new Date('07/12/2003'),
         rol: UserRole.PACIENTE
     },
@@ -31,7 +31,7 @@ export const users: RegisterDto[] = [
         cedula: "2234454849",
         contacto: "0900298841",
         email: "doctor@doctor.com",
-        password: "doctor",
+        password: "Rmga288+",
         fecha_nacimiento: new Date('08/12/2003'),
         rol: UserRole.DOCTOR
     },

@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Cita` MODIFY `fecha` DATETIME NOT NULL;
