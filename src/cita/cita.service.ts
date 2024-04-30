@@ -113,17 +113,27 @@ export class CitaService {
 
 	async findCitasByPacienteQuery(fecha?: Date, aceptada?: boolean) {
 		try {
-			
-
-			const allCitas = await this.prisma.$queryRaw(Prisma.sql`
-            SELECT * FROM Cita WHERE DATE(fecha) = DATE(${fecha}) and aceptada=${aceptada};
-            `);
-
-			console.log(allCitas);
-			return allCitas;
+		  const allCitas = await this.prisma.$queryRaw(Prisma.sql`
+			SELECT
+			  c.id,
+			  c.fecha,
+			  c.pacienteId,
+			  c.motivo,
+			  c.sintomas,
+			  c.aceptada,
+			  u.nombre,
+			  u.apellido,
+			  u.photoUrl
+			FROM Cita c
+			JOIN Usuario u ON c.pacienteId = u.id
+			WHERE DATE(c.fecha) = DATE(${fecha})
+			  AND c.aceptada = ${aceptada};
+		  `);
+		  console.log(allCitas);
+		  return allCitas;
 		} catch (error) {
-			console.log(error);
-			throw new Error("Error: " + error);
+		  console.log(error);
+		  throw new Error("Error: " + error);
 		}
-	}
+	  }
 }
