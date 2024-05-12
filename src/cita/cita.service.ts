@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { CreateCitaDTO } from "./dto/Citas.dto";
+import { CreateCitaDTO, UpdateCitaDTO } from "./dto/Citas.dto";
 import { Prisma } from "@prisma/client";
 
 @Injectable()
@@ -113,7 +113,7 @@ export class CitaService {
 
 	async findCitasByPacienteQuery(fecha?: Date, aceptada?: boolean) {
 		try {
-		  const allCitas = await this.prisma.$queryRaw(Prisma.sql`
+			const allCitas = await this.prisma.$queryRaw(Prisma.sql`
 			SELECT
 			  c.id,
 			  c.fecha,
@@ -129,11 +129,27 @@ export class CitaService {
 			WHERE DATE(c.fecha) = DATE(${fecha})
 			  AND c.aceptada = ${aceptada};
 		  `);
-		  console.log(allCitas);
-		  return allCitas;
+			console.log(allCitas);
+			return allCitas;
 		} catch (error) {
-		  console.log(error);
-		  throw new Error("Error: " + error);
+			console.log(error);
+			throw new Error("Error: " + error);
 		}
-	  }
+	}
+
+	async patchCita(id: number, data: UpdateCitaDTO) {
+		const response = this.prisma.cita.update({
+			where: { id },
+			data: { ...data },
+		});
+
+		if (!response) {
+			throw new HttpException(
+				`Error al actualizar la cita con el id ${id}}`,
+				HttpStatus.BAD_REQUEST,
+			);
+		}
+
+		return response;
+	}
 }

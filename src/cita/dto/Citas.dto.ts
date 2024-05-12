@@ -1,5 +1,7 @@
 // CitaDTO.ts
 
+import { PartialType } from "@nestjs/mapped-types";
+
 export interface CitaDTO {
     id: number;
     fecha: string;
@@ -10,12 +12,14 @@ export interface CitaDTO {
 
   }
 
-  export interface CreateCitaDTO {
+  export class CreateCitaDTO {
     fecha: Date;
     pacienteId?: number;
     motivo: string;
     sintomas?: string;
     acetpada:boolean;
   }
+
+  export class UpdateCitaDTO extends PartialType(CreateCitaDTO){}
   
   

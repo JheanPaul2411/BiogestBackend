@@ -9,7 +9,7 @@ async function bootstrap() {
   app.use(cors({
     
     origin: ['http://localhost:5173', 'http://localhost:8080'],  // o '*' para permitir desde cualquier origen
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'], // Métodos permitidos
     exposedHeaders: ['Content-Type', 'Authorization'],  // Cabeceras permitidas
     credentials: true,  // Habilita el envío de credenciales (cookies, tokens)
   }));

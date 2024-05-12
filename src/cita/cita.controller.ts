@@ -5,12 +5,13 @@ import {
 	Get,
 	Param,
 	ParseBoolPipe,
+	Patch,
 	Post,
 	Put,
 	Query,
 	UseGuards,
 } from "@nestjs/common";
-import { CreateCitaDTO } from "./dto/Citas.dto";
+import { CreateCitaDTO, UpdateCitaDTO } from "./dto/Citas.dto";
 import { CitaService } from "./cita.service";
 import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard";
 import { Roles } from "src/auth/decorators/Roles.decorator";
@@ -78,5 +79,10 @@ export class CitaController {
 	@Put(":id")
 	async updateCita(@Param("id") id: string, @Body() data: CreateCitaDTO) {
 		return await this.citaService.updateCita(parseInt(id), data);
+	}
+
+	@Patch(':id')
+	async updatePartialCita(@Param('id') id:string, @Body()data:UpdateCitaDTO ){
+		return await this.citaService.patchCita(+id, data)
 	}
 }
