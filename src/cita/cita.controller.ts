@@ -37,6 +37,19 @@ export class CitaController {
 		);
 	}
 
+	@UseGuards(RolesGuard)
+	@Roles([UserRole.DOCTOR, UserRole.ADMIN])
+	@Get("rango")
+	async getCitasByDateRange(
+	  @Query("fechaInicio") fechaInicio: string,
+	  @Query("fechaFin") fechaFin: string,
+	  @Query("aceptada", ParseBoolPipe) aceptada: boolean,
+	) {
+	  const inicio = new Date(fechaInicio);
+	  const fin = new Date(fechaFin);
+	  return await this.citaService.findCitasByDateRange(inicio, fin, aceptada);
+	}
+
 	/**
 	 * Obtiene las citas de un paciente
 	 */

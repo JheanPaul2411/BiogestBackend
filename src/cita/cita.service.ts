@@ -5,7 +5,31 @@ import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class CitaService {
+
+
 	constructor(private readonly prisma: PrismaService) {}
+
+	async findCitasByDateRange(fechaInicio: Date, fechaFin: Date, aceptada: boolean) {
+		const allCitas = await this.prisma.cita.findMany({
+		  where: {
+			fecha: {
+			  gte: fechaInicio,
+			  lte: fechaFin,
+			},
+			aceptada: aceptada,
+		  },
+		  include: { paciente: true },
+		});
+	
+		if (!allCitas.length) {
+		  throw new HttpException(
+			"No existen citas en el rango de fechas especificado",
+			HttpStatus.NOT_FOUND,
+		  );
+		}
+	
+		return allCitas;
+	  }
 
 	async findAllCitas() {
 		const allCitas = await this.prisma.cita.findMany({

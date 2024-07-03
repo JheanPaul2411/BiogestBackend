@@ -59,3 +59,119 @@ model fichaMedica {
   tratamiento            String?
   proximaCita            DateTime? @db.Date
 }
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model Persona {
+//   idPersona       Int      @id @default(autoincrement())
+//   nombre          String   @db.VarChar(45)
+//   apellido        String   @db.VarChar(45)
+//   cedula          String   @db.VarChar(45)
+//   fecha_nacimiento String   @db.VarChar(45)
+//   contacto        String   @db.VarChar(45)
+//   idUsuario       Int
+//   usuario         Usuario  @relation(fields: [idUsuario], references: [idUsuario])
+//   citas           Cita[]
+// }
+
+// model Usuario {
+//   idUsuario       Int      @id @default(autoincrement())
+//   email           String   @db.VarChar(45)
+//   clave           String   @db.VarChar(255)
+//   personas        Persona[]
+//   usuario_has_rol Usuario_has_Rol[]
+// }
+
+// model FichaMedica {
+//   idFichaMedica    Int      @id @default(autoincrement())
+//   peso             String   @db.VarChar(45)
+//   altura           String   @db.VarChar(45)
+//   presion_arterial String   @db.VarChar(45)
+//   temperatura      String   @db.VarChar(45)
+//   citas            Cita[]
+//   enfermedad_has_fichamedica Enfermedad_has_fichamedica[]
+//   alergia_has_fichamedica    Alergia_has_fichamedica[]
+// }
+
+// model Cita {
+//   idCita          Int      @id @default(autoincrement())
+//   fecha           String   @db.VarChar(45)
+//   motivo          String   @db.VarChar(45)
+//   sintomas        String   @db.VarChar(45)
+//   aceptada        Boolean  @db.TinyInt
+//   idPersona       Int
+//   idFichaMedica   Int
+//   persona         Persona  @relation(fields: [idPersona], references: [idPersona])
+//   fichaMedica     FichaMedica @relation(fields: [idFichaMedica], references: [idFichaMedica])
+// }
+
+// model Enfermedad {
+//   idEnfermedades  Int      @id @default(autoincrement())
+//   nombre          String   @db.VarChar(45)
+//   descripcion     String   @db.VarChar(150)
+//   enfermedad_has_fichamedica Enfermedad_has_fichamedica[]
+// }
+
+// model Enfermedad_has_fichamedica {
+//   idEnfermedades  Int
+//   idFichaMedica   Int
+//   enfermedad      Enfermedad  @relation(fields: [idEnfermedades], references: [idEnfermedades])
+//   fichaMedica     FichaMedica @relation(fields: [idFichaMedica], references: [idFichaMedica])
+
+//   @@id([idEnfermedades, idFichaMedica])
+// }
+
+// model Alergia {
+//   idAlergia       Int      @id @default(autoincrement())
+//   nombre          String   @db.VarChar(45)
+//   descripcion     String   @db.VarChar(150)
+//   alergia_has_fichamedica Alergia_has_fichamedica[]
+// }
+
+// model Alergia_has_fichamedica {
+//   idAlergia       Int
+//   idFichaMedica   Int
+//   alergia         Alergia     @relation(fields: [idAlergia], references: [idAlergia])
+//   fichaMedica     FichaMedica @relation(fields: [idFichaMedica], references: [idFichaMedica])
+
+//   @@id([idAlergia, idFichaMedica])
+// }
+
+// model Rol {
+//   idRol           Int      @id @default(autoincrement())
+//   Nombre          String   @db.VarChar(45)
+//   usuario_has_rol Usuario_has_Rol[]
+//   rol_has_menu    Rol_has_Menu[]
+// }
+
+// model Usuario_has_Rol {
+//   idUsuario       Int
+//   idRol           Int
+//   usuario         Usuario  @relation(fields: [idUsuario], references: [idUsuario])
+//   rol             Rol      @relation(fields: [idRol], references: [idRol])
+
+//   @@id([idUsuario, idRol])
+// }
+
+// model Menu {
+//   idMenu          Int      @id @default(autoincrement())
+//   ruta            String   @db.VarChar(45)
+//   descripcion     String   @db.VarChar(45)
+//   rol_has_menu    Rol_has_Menu[]
+// }
+
+// model Rol_has_Menu {
+//   idRol           Int
+//   idMenu          Int
+//   rol             Rol      @relation(fields: [idRol], references: [idRol])
+//   menu            Menu     @relation(fields: [idMenu], references: [idMenu])
+
+//   @@id([idRol, idMenu])
+// }
